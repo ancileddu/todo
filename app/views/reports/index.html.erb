@@ -1,101 +1,115 @@
 <div class="container">
-<div class="row">
-<div class = "panel panel-default">
-   <div class = "panel-body text-uppercase text-center bg-primary">
-     <strong> Task Report di <%= current_user.username %></strong>
-   </div>
-</div>
+  <div class="row">
+    <div class = "panel panel-default">
+      <div class = "panel-body text-uppercase text-center bg-primary">
+        <strong> Task Report di <%= current_user.username %></strong>
+      </div>
+    </div>
 
-<%= link_to tasks_path do %>
-  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-  <span class="glyphicon-class">Torna indietro</span>
-    <% end %>
-<%= link_to reports_view_path, "class"=> "right" do %>
-  <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-  <span class="glyphicon-class">Esporta in PDF</span>
+    <%= link_to tasks_path do %>
+      <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+      <span class="glyphicon-class">Torna indietro</span>
     <% end %>
 
-
-<div class = "panel panel-default">
-   <div class = "panel-body text-uppercase text-center bcolor">
-     <strong> Rapporto completati/aperti</strong>
-   </div>
-</div>
-
-<table class="table table-hover table-bordered">
-<tr class="info">
-    <th>Task Totali</th>
-    <td><%= current_user.tasks.count %></td>
-  </tr>
-  <tr class="warning">
-    <th>Totali Aperti</th>
-    <td><%= current_user.tasks.opened.count %></td>
-  </tr>
-  <tr class="success">
-    <th>Totali Chiusi</th>
-    <td><%= current_user.tasks.closed.count %></td>
-  </tr>
-  <tr class="active">
-    <th>Percentuale completati/totali</th>
-    <td><%= current_user.tasks.rating %> %</td>
-  </tr>
-</table>
-<div class = "panel panel-default">
-   <div class = "panel-body text-uppercase text-center bcolor">
-     <strong> Categorie più gettonate per task</strong>
-   </div>
-</div>
+    <%= link_to reports_view_path, target: :_blank, "class"=> "right" do %>
+      <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
+      <span class="glyphicon-class">Esporta in PDF</span>
+    <% end %>
 
 
+    <div class = "panel panel-default">
+       <div class = "panel-body text-uppercase text-center bcolor">
+         <strong> Rapporto completati/aperti</strong>
+       </div>
+    </div>
 
-<table id="report_table" class="table table-hover table-bordered tablesorter">
-<thead> 
-<tr> 
-    <th>Categoria</th> 
-    <th>Task</th> 
-</tr> 
-</thead>
-<tbody> 
-  <!--tr id ="report">
-    <th>Categoria</th>
-    <th>Task</th> 
-  </tr-->
-<!-- qui userò un forech per ogni categoria -->
-<% current_user.tasks.category_list.each do |task| %>
-  <tr id ="report"> 
-    <td><%= task.category %></td>
-    <td><%= task.count_task_categories(task.category) %></td>
-  </tr>
-  <% end %>
-  </tbody> 
-</table>
-<div class = "panel panel-default">
-   <div class = "panel-body text-uppercase text-center bcolor">
-     <strong> Percentuale di completamento per categoria</strong>
-   </div>
-</div>
+    <table class="table table-hover table-bordered">
+      <tr class="info">
+        <th>Task Totali</th>
+        <td><%= current_user.tasks.count %></td>
+      </tr>
+      <tr class="warning">
+        <th>Totali Aperti</th>
+        <td><%= current_user.tasks.opened.count %></td>
+      </tr>
+      <tr class="success">
+        <th>Totali Chiusi</th>
+        <td><%= current_user.tasks.closed.count %></td>
+      </tr>
+      <tr class="active">
+        <th>Percentuale completati/totali</th>
+        <td><%= current_user.tasks.rating %> %</td>
+      </tr>
+    </table>
 
-<table id="report_table2" class="table table-hover table-bordered tablesorter">
-<!-- qui userò un forech per ogni categoria -->
-  <!--tr id ="report">
-    <th>Categoria</th>
-    <th>Completamento</th> 
 
-  </tr-->
-<thead> 
-<tr> 
-    <th>Categoria</th> 
-    <th>Completamento</th> 
-</tr> 
-</thead>
-<tbody> 
-  <% current_user.tasks.category_list.each do |task| %>
-  <tr id ="report"> 
-    <td><%= task.category %></td>
-    <td><%= task.completed_categories(task.category) %> %</td>
-  </tr>
-  <% end %>
-  </tbody> 
-</table>
-</div>
+    <div class = "panel panel-default">
+      <div class = "panel-body text-uppercase text-center bcolor">
+        <strong> Categorie più gettonate per task</strong>
+      </div>
+    </div>
+
+    <table id="report_table" class="table table-hover table-bordered tablesorter">
+      <thead> 
+        <tr> 
+          <th>Categoria</th> 
+          <th>Task</th> 
+        </tr> 
+      </thead>
+      <tbody> 
+        <% current_user.tasks.category_list.each do |task| %>
+          <tr id ="report"> 
+            <td><%= task.category %></td>
+            <td><%= task.count_task_categories(task.category) %></td>
+          </tr>
+        <% end %>
+      </tbody> 
+    </table>
+
+    <div class = "panel panel-default">
+       <div class = "panel-body text-uppercase text-center bcolor">
+         <strong> Percentuale di completamento per categoria</strong>
+       </div>
+    </div>
+
+    <table id="report_table2" class="table table-hover table-bordered tablesorter">
+      <thead> 
+      <tr> 
+          <th>Categoria</th> 
+          <th>Completamento</th> 
+      </tr> 
+      </thead>
+      <tbody> 
+        <% current_user.tasks.category_list.each do |task| %>
+          <tr id ="report"> 
+            <td><%= task.category %></td>
+            <td><%= task.completed_categories(task.category) %> %</td>
+          </tr>
+        <% end %>
+      </tbody> 
+    </table>
+
+    <div class = "panel panel-default">
+       <div class = "panel-body text-uppercase text-center bcolor">
+         <strong> Tempo medio speso per completare i task per categoria</strong>
+       </div>
+    </div>
+
+    <table id="report_table2" class="table table-hover table-bordered tablesorter">
+      <thead> 
+      <tr> 
+          <th>Categoria</th> 
+          <th>Tempo medio</th> 
+      </tr> 
+      </thead>
+      <tbody> 
+        <% current_user.tasks.category_list.each do |task| %>
+          <tr id ="report"> 
+            <td><%= task.category %></td>
+            <td><%= task.avgtime_category(task.category) %></td>
+          </tr>
+        <% end %>
+      </tbody> 
+    </table>
+  </div>
 </div>

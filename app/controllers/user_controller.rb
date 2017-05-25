@@ -14,11 +14,11 @@ class UserController < ApplicationController
     end
 
     def show
-   if request.xhr?
-    render :json => current_user 
+    if request.xhr?
+      render :json => current_user 
     else
       # respond to normal request
-     redirect_to tasks_path #the root
+      redirect_to tasks_path #the root
     end
 
   end

@@ -1,7 +1,7 @@
+<strong> Task Report di <%= current_user.username %></strong>
 
-     <strong> Task Report di <%= current_user.username %></strong>
-   <table >
-<tr >
+<table >
+  <tr >
     <th> Task Totali</th>
     <td><%= current_user.tasks.count %></td>
   </tr>
@@ -19,28 +19,35 @@
   </tr>
 </table>
 
-     <strong>Frequenza categorie Todo List </strong>
-  
-
-
+<strong>Frequenza categorie Todo List </strong>
 
 <table >
-
-<% @tasks.category_list.each do |task| %>
-  <tr > 
-    <td><%= task.category %></td>
-    <td><%= task.count_task_categories(task.category) %></td> 
-  </tr>
+  <% @tasks.category_list.each do |task| %>
+    <tr > 
+      <td><%= task.category %></td>
+      <td><%= task.count_task_categories(task.category) %></td> 
+    </tr>
   <% end %>
 </table>
-     <strong> Percentuale di completamento per categoria</strong>
-  
+
+<strong> Percentuale di completamento per categoria</strong>
 
 <table>
   <% @tasks.category_list.each do |task| %>
-  <tr > 
-    <td><%= task.category %></td>
-    <td><%= task.completed_categories(task.category) %></td>
-  </tr>
+    <tr > 
+      <td><%= task.category %></td>
+      <td><%= task.completed_categories(task.category) %></td>
+    </tr>
+  <% end %>
+</table>
+
+<strong> Tempo medio speso per completare i task per categoria</strong>
+
+<table>
+  <% @tasks.category_list.each do |task| %>
+    <tr > 
+      <td><%= task.category %></td>
+      <td><%= task.avgtime_category(task.category) %></td>
+    </tr>
   <% end %>
 </table>

@@ -1,88 +1,79 @@
-<!--p id="notice"><%= notice %></p-->
-
 <div class="container-fluid">
   <div class="row">
-  <div class="col-xs-7 col-md-offset-3">
-  <div id="response"></div>
-  <div class = "panel panel-default">
-   <div class = "panel-body text-uppercase text-center bg-primary">
-     <strong> Benvenuto <%= current_user.username %></strong>
-   </div>
-</div>
-<%= render 'form', task: @task %>
+    <div class="col-xs-7 col-md-offset-3">
+      <div id="response"></div>
+      <div class = "panel panel-default">
+       <div class = "panel-body text-uppercase text-center bg-primary">
+         <strong> Benvenuto <%= current_user.username %></strong>
+       </div>
+     </div>
+     <%= render 'form', task: @task %>
+    </div>
 
-</div>
-<div class="col-md-12 col-xs-12" id="view">
-<%= select_tag "view", options_for_select([ "i tuoi task", "task assegnati", "visualizza tutti" ], "visualizza tutti"), {"class" => "form-control"} %>
- <%= check_box_tag("all_check", value = "false") %> Visualizza Tutti
-<%= check_box_tag("closed_check", value = "true") %> Completati
-<%= check_box_tag("opened_check", value = "false") %> Non Completati
+    <div class="col-md-12 col-xs-12" id="view">
+      <%= select_tag "view", options_for_select([ "i tuoi task", "task assegnati", "visualizza tutti" ], "visualizza tutti"), {"class" => "form-control"} %>
+      <%= check_box_tag("all_check", value = "false") %> Visualizza Tutti
+      <%= check_box_tag("closed_check", value = "true") %> Completati
+      <%= check_box_tag("opened_check", value = "false") %> Non Completati
+    </div>
+  </div>
 
-</div>
-
- 
-
-</div>
-<table id="mytable" class="table table-striped">
-  <thead>
-    <tr>
-      <th>Username</th>
-      <th>email</th>
-      <th>Start</th>
-      <th>Value</th>
-      <th>Category</th>
-      <th>Date</th>
-      <th>Assignee</th>
-      <th>Stato</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-
-  <tbody>
-    <% @tasks.order(created_at: :desc).each do |task| %>
+  <table id="mytable" class="table table-striped">
+    <thead>
       <tr>
-        <td id="user_name_task"><%= task.user.username %></td>
-        <td><%= task.user.email %></td>
-        <td>
-          <% if (task.user_id == current_user.id) or (task.assignee == current_user.username) then %>
-            <% if !task.completed then %>
-              <%= link_to  startTask_task_path(task), method: :patch do %>
+        <th>Username</th>
+        <th>email</th>
+        <th>Start</th>
+        <th>Value</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Assignee</th>
+        <th>Stato</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tasks.order(created_at: :desc).each do |task| %>
+        <tr>
+          <td id="user_name_task"><%= task.user.username %></td>
+          <td><%= task.user.email %></td>
+          <td>
+            <% if (task.user_id == current_user.id) or (task.assignee == current_user.username) then %>
+              <% if !task.completed then %>
+                <%= link_to  startTask_task_path(task), method: :patch do %>
+                  <span class="fa fa-play-circle-o" aria-hidden="true"></span>
+                <% end %>
+              <% else %>
                 <span class="fa fa-play-circle-o" aria-hidden="true"></span>
               <% end %>
-            <% else %>
-              <span class="fa fa-play-circle-o" aria-hidden="true"></span>
             <% end %>
-          <% end %>
-        </td>
-        <td><%= task.value %></td>
-        <td><%= task.category %></td>
-        <td><%= task.date.strftime('%d-%m-%Y') %></td>
-        <td id="assignee_task"><%= task.assignee %></td>
-        <td id="task_status" style="display: none"><%= task.completed %></td>
-        
-      
-        <td id="task_check" >
-          <% if (task.user_id == current_user.id) or (task.assignee == current_user.username) then %>
-            <% if !task.completed then %>
-              <%= link_to complete_task_path(task), method: :patch do %>
-                <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+          </td>
+          <td><%= task.value %></td>
+          <td><%= task.category %></td>
+          <td><%= task.date.strftime('%d-%m-%Y') %></td>
+          <td id="assignee_task"><%= task.assignee %></td>
+          <td id="task_status" style="display: none"><%= task.completed %></td>
+          <td id="task_check" >
+            <% if (task.user_id == current_user.id) or (task.assignee == current_user.username) then %>
+              <% if !task.completed then %>
+                <%= link_to complete_task_path(task), method: :patch do %>
+                  <span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>
+                <% end %>
+              <% else %>
+                <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
               <% end %>
-            <% else %>
-              <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
-            <% end %>
-          <% end %> 
-        </td>
-        <td>
-          <% if (task.user_id == current_user.id) then %>
-            <%= link_to task, method: :delete, data: { confirm: 'Confermi eliminazione?' } do %>
-              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-            <% end %>
-          <% end %> 
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-</div>
+            <% end %> 
+          </td>
+          <td>
+            <% if (task.user_id == current_user.id) then %>
+              <%= link_to task, method: :delete, data: { confirm: 'Confermi eliminazione?' } do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              <% end %>
+            <% end %> 
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

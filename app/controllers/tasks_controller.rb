@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:show, :edit, :update, :destroy, :complete]
+  before_action :set_task, only: [:show, :edit, :update, :destroy, :complete, :startTask]
   before_action :authenticate_user!
   respond_to :js, :json, :html
   
@@ -92,12 +92,9 @@ class TasksController < ApplicationController
   end
 
   def startTask
-    if @task.nil?
-      redirect_to task_url, notice: 'Suca'
-    else
       @task.update_attribute(:startDate, Time.now.getutc) #setto tempo inizio task
-      redirect_to root_path, notice: 'Tempo partito'
-    end
+      noti = "Tempo partito per"+@task.id.to_s
+      redirect_to tasks_url, notice: noti
   end
 
   def notified
@@ -113,22 +110,14 @@ class TasksController < ApplicationController
   
   end
 
-  
-
-  
-
-  
-
   private 
-
-  
 
   #date_of_next "Monday"
     #=>#<Date: 2011-10-31 (4911731/2,0,2299161)>
   #date_of_next "Sunday"
     #=>#<Date: 2011-10-30 (4911729/2,0,2299161)>
 
- def set_date
+  def set_date
   
       if !@task.value.scan(/!(\w+)/)[0].nil? #se ! è impostato - 1f
           if @task.value.scan(/!(\w+)/)[0].join.to_s == "oggi" #se è oggi - 2if
@@ -159,8 +148,6 @@ class TasksController < ApplicationController
             value = @task.value.sub(/!([\d.]+)/, "")
             @task.value = value
           end
-            
-
       else #se ! non è impostato allora salva la data di oggi - 1f
           @task.date = DateTime.now
           value = @task.value.sub(/!([\d.]+)/, "")
@@ -179,14 +166,13 @@ class TasksController < ApplicationController
     end
   end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def task_params
-      params.require(:task).permit(:value, :completed, :category, :date, :assignee)
-
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def task_params
+    params.require(:task).permit(:value, :completed, :category, :date, :assignee)
+  end
 end

@@ -4,12 +4,10 @@ Rails.application.routes.draw do
   get '/reports/view' => 'reports#view'
   get '/tasks/notify_assigned', to: 'tasks#notify_assigned'
   post 'tasks/notified' => 'tasks#notified'
- # patch 'tasks/startTask' => 'tasks#startTask'
   resources :tasks, except: [:edit, :show, :new] do
   	member do
-      patch :startTask
+     patch :startTask
      patch :complete
-
   	end
   end
 
