@@ -34,7 +34,7 @@
     </thead>
 
     <tbody>
-      <% @tasks.order(created_at: :desc).each do |task| %>
+      <% @tasks.where("user_id = ? OR assignee = ?", current_user.id, current_user.username).order(created_at: :desc).each do |task| %>
         <tr>
           <td id="user_name_task"><%= task.user.username %></td>
           <td><%= task.user.email %></td>
