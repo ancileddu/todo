@@ -1,53 +1,94 @@
-<strong> Task Report di <%= current_user.username %></strong>
+<head>
+  <style>
+  body {
+   margin:0 auto;
+   padding:0;
+  }
+     
+    .numTaskT tr td { width:25%; text-align:center;}
 
-<table >
-  <tr >
-    <th> Task Totali</th>
+    .freqCatT {margin: 0px auto;}
+
+    .freqCatT tr td { width:50%; text-align:center;}
+
+    .centerDiv {margin: 0 auto;}
+
+</style>
+</head>
+<p align="center"><strong> <font color="red" size="10">Task Report di <%= current_user.username %></font></strong></p>
+
+<table width="100%" border="1" class = "numTaskT">
+  <thead>
+    <td>Task Totali</td>
+    <td>Totali Aperti</td>
+    <td>Totali Chiusi</td>
+    <td>Percentuale completati/totali</td>
+  </thead>
+  <tfoot>
+  <tr>
     <td><%= current_user.tasks.count %></td>
-  </tr>
-  <tr >
-    <th>Totali Aperti</th>
     <td><%= current_user.tasks.opened.count %></td>
-  </tr>
-  <tr >
-    <th>Totali Chiusi</th>
     <td><%= current_user.tasks.closed.count %></td>
-  </tr>
-  <tr >
-    <th>Percentuale completati/totali</th>
     <td><%= current_user.tasks.rating %> %</td>
   </tr>
+  </tfoot>
 </table>
 
-<strong>Frequenza categorie Todo List </strong>
+<br><br>
 
-<table >
+<p align="center"><strong> <font color="black" size="6">Frequenza categorie Todo List</font></strong></p>
+
+<div class="centerdiv">
+<table width="50%" border="1" class = "freqCatT">
+  <thead>
+    <td>Categoria</td>
+    <td>#</td>
+  </thead>
+  <tfoot>
   <% @tasks.category_list.each do |task| %>
     <tr > 
       <td><%= task.category %></td>
       <td><%= task.count_task_categories(task.category) %></td> 
     </tr>
   <% end %>
+  </tfoot>
 </table>
 
-<strong> Percentuale di completamento per categoria</strong>
+<br><br>
 
-<table>
+<p align="center"><strong> <font color="black" size="6">Percentuale di completamento per categoria</font></strong></p>
+
+<table  width="50%" border="1" class = "freqCatT">
+  <thead>
+    <td>Categoria</td>
+    <td>%</td>
+  </thead>
+  <tfoot>
   <% @tasks.category_list.each do |task| %>
     <tr > 
       <td><%= task.category %></td>
       <td><%= task.completed_categories(task.category) %></td>
     </tr>
   <% end %>
+  </tfoot>
 </table>
 
-<strong> Tempo medio speso per completare i task per categoria</strong>
+<br><br>
 
-<table>
+<p align="center"><strong> <font color="black" size="6">Tempo medio speso per completare i task per categoria</font></strong></p>
+
+<table  width="50%" border="1" class = "freqCatT">
+  <thead>
+    <td>Categoria</td>
+    <td>Tempo medio speso</td>
+  </thead>
+  <tfoot>
   <% @tasks.category_list.each do |task| %>
     <tr > 
       <td><%= task.category %></td>
       <td><%= task.avgtime_category(task.category) %></td>
     </tr>
   <% end %>
+  </tfoot>
 </table>
+</div>
