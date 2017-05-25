@@ -1,0 +1,46 @@
+
+     <strong> Task Report di <%= current_user.username %></strong>
+   <table >
+<tr >
+    <th> Task Totali</th>
+    <td><%= current_user.tasks.count %></td>
+  </tr>
+  <tr >
+    <th>Totali Aperti</th>
+    <td><%= current_user.tasks.opened.count %></td>
+  </tr>
+  <tr >
+    <th>Totali Chiusi</th>
+    <td><%= current_user.tasks.closed.count %></td>
+  </tr>
+  <tr >
+    <th>Percentuale completati/totali</th>
+    <td><%= current_user.tasks.rating %> %</td>
+  </tr>
+</table>
+
+     <strong>Frequenza categorie Todo List </strong>
+  
+
+
+
+<table >
+
+<% @tasks.category_list.each do |task| %>
+  <tr > 
+    <td><%= task.category %></td>
+    <td><%= task.count_task_categories(task.category) %></td> 
+  </tr>
+  <% end %>
+</table>
+     <strong> Percentuale di completamento per categoria</strong>
+  
+
+<table>
+  <% @tasks.category_list.each do |task| %>
+  <tr > 
+    <td><%= task.category %></td>
+    <td><%= task.completed_categories(task.category) %></td>
+  </tr>
+  <% end %>
+</table>

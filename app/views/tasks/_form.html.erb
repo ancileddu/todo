@@ -1,0 +1,49 @@
+<%= form_for(task) do |f| %>
+  <% if task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  
+    
+
+  <div class="speech">
+    <div class="field" >
+      <%= f.text_field :value %> 
+      <img onclick="startRecognition()" src="//i.imgur.com/cHidSVu.gif" />
+      <!--<input type="button" onclick="startRecognition();" value="R" />-->
+    </div>
+  </div>
+
+  <div id="details">
+      
+    </div>
+  <!--div class="field">
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
+  </div>
+
+  
+
+  <div class="field">
+    <%= f.label :date %>
+    <%= f.datetime_select :date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :assignee %>
+    <%= f.text_field :assignee %>
+  </div-->
+
+  <div class="actions">
+    <%= f.submit "CREA TASK", class: 'btn btn-success' %>
+    <div style="float: right; font-size: 11px; text-align: right; text-justify: inter-word; max-width: 50%; ">Assegnare task: @username<br>Categoria: #esempio_categoria<br>Data: !gg.mm.aaaa (oppure "oggi"/"domani"). Se "aaaa" non specificato verrà usato l'anno corrente. Se "mm.aaaa" non specificati verranno usati mese e anno corrente.<br>Esempio utilizzo comando vocale: "nuovo task assegnatario utente Categoria categoria Data data Valore valore finito"</div>
+  </div>
+<% end %>

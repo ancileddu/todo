@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  owner: MyString
+  value: MyString
+  completed: false
+  category: MyString
+  date: 2016-11-17 18:49:46
+  assignee: MyString
+
+two:
+  owner: MyString
+  value: MyString
+  completed: false
+  category: MyString
+  date: 2016-11-17 18:49:46
+  assignee: MyString
