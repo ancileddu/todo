@@ -9,7 +9,17 @@
 
   <body>
     <header id="head" class="secondary"></header>
-    <p id="notice"><%= notice %></p>
+    <!--p id="notice"><%= notice %></p-->
+    <% if flash[:success] %>
+  <div class="alert alert-info">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
 
     <div class="navbar navbar-inverse navbar-fixed-top headroom" >
       <div class="container">

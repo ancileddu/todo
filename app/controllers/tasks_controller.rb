@@ -51,10 +51,10 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to tasks_url, status: "ok", notice: 'Task creato correttamente. '}
+        format.html { redirect_to tasks_url, :flash => { :success => "task creato Correttamente!" }}
         format.json { render :show, status: :created, location: @task }
       else
-        format.html { render :new }
+        format.html { render :new, :flash => { :alert => "Errore creazione task!" }}
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -65,10 +65,10 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update(task_params)
-        format.html { redirect_to @task, notice: 'Task Modificato Correttamente.' }
+        format.html { redirect_to @task, :flash => { :success => "task modificato Correttamente!" }}
         format.json { render :show, status: :ok, location: @task }
       else
-        format.html { render :edit }
+        format.html { render :edit, :flash => { :alert => "Errore modifica task!" } }
         format.json { render json: @task.errors, status: :unprocessable_entity }
       end
     end
@@ -79,7 +79,7 @@ class TasksController < ApplicationController
   def destroy
     @task.destroy
     respond_to do |format|
-      format.html { redirect_to tasks_url, notice: 'Task Eliminato Correttamente.' }
+      format.html { redirect_to tasks_url, :flash => { :success => "task eliminato Correttamente!" }}
       format.json { head :no_content }
     end
   end
@@ -87,14 +87,14 @@ class TasksController < ApplicationController
   def complete
     @task.update_attribute(:completed, true)
     @task.update_attribute(:endDate, Time.now.getutc) #setto tempo fine task
-    redirect_to tasks_url, notice: 'Task completato!' 
+    redirect_to tasks_url, :flash => { :success => "task completato!" }
 
   end
 
   def startTask
       @task.update_attribute(:startDate, Time.now.getutc) #setto tempo inizio task
-      noti = "Tempo partito per"+@task.id.to_s
-      redirect_to tasks_url, notice: noti
+      noti = "Tempo partito per "+@task.id.to_s
+      redirect_to tasks_url, :flash => { :success => noti }
   end
 
   def notified
