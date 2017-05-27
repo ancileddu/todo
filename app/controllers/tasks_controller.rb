@@ -43,7 +43,7 @@ class TasksController < ApplicationController
       if User.exists?(:username => assegnatarioTMP)
         @task.assignee = valore[initIndexAss + 1,finIndexAss]
       else
-        redirect_to tasks_url, notice: 'Assegnatario non presente. Riprova '
+        redirect_to tasks_url, :flash => { :alert => "Utente scelto per svolgere il task non esiste!" }
         return
       end
       @task.value = valore[finIndexAss + 1,valore.length]
