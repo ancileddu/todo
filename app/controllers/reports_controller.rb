@@ -5,15 +5,15 @@ class ReportsController < ApplicationController
 	end
 	
 	def view
-    render pdf: "Report",
-           :template => 'reports/view.pdf.erb', formats: :html, encoding: 'utf8',
-           locals: {:task => @task}
-  end
+	    render pdf: "Report",
+	           :template => 'reports/view.pdf.erb', formats: :html, encoding: 'utf8',
+	           locals: {:task => @task}
+  	end
 
-private
-def set_task
-  @tasks = Task.all
-end
+	private
+	def set_task
+	  @tasks = Task.all
+	end
 
 
 end
