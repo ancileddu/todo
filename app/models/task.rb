@@ -36,14 +36,17 @@ class Task < ActiveRecord::Base
 
 	def avgtime_category(category)
 	 	avg = 0
+	 	sum = 0
 	 	count = 0
 		Task.where(category: category).closed.each do |t|
 			if(t.endDate.nil? == false && t.startDate.nil? == false)
 				count++
 				diff = (t.endDate - t.startDate)
-  				avg = avg + diff
+  				sum = sum + diff
   			end
   		end
+  		avg = sum/count
+
   		return Time.at(avg).utc.strftime("%H:%M:%S") #=> "01:00:00"
 	end
 
